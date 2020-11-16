@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3b0432e1-69e0-4558-a4e1-fe9078398232" name="Default Changelist" comment="" />
+    <list default="true" id="3b0432e1-69e0-4558-a4e1-fe9078398232" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +18,9 @@
     </option>
   </component>
   <component name="GOROOT" path="$USER_HOME$/sdk/go1.15.4" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1kENOVWqMuZIlB3aSzqwdxTeiYT" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,5 +41,15 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="28" y="541" key="#SQL_Dialects" timestamp="1605561900332">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="28" y="541" key="#SQL_Dialects/0.0.2560.1400@0.0.2560.1400" timestamp="1605561900332" />
+    <state x="239" y="358" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605561904181">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="239" y="358" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1605561904181" />
   </component>
 </project>

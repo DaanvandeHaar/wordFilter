@@ -2,29 +2,33 @@ package main
 
 import (
 	"bufio"
-	"context"
+	"database/sql"
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	_ "github.com/lib/pq"
 	"log"
 	"os"
 	"strings"
-	"time"
 )
 
 func main() {
-	//var text []string
+	// declare slice of words
 	var words []string
+
+	//open words.txt file
 	file, err := os.Open("words.txt")
+	//check for errors
 	if err != nil {
 		log.Fatal(err)
 	}
+	//keep file open
 	defer file.Close()
 
+	//open new scanner for words.txt
 	scanner := bufio.NewScanner(file)
+
+	//check for non alpha chars and select words with 5-7 char len words
 	for scanner.Scan() {
-		if checkIfAlpha(scanner.Text()){
+		if checkIfAlpha(scanner.Text()) {
 			if len(scanner.Text()) >= 5 && len(scanner.Text()) <= 7 {
 				words = append(words, scanner.Text())
 			}
@@ -36,6 +40,8 @@ func main() {
 	}
 	setWords(words)
 }
+
+//check if all chars in word are letters
 func checkIfAlpha(s string) bool {
 	const alpha = "abcdefghijklmnopqrstuvwxyz"
 	for _, char := range s {
@@ -45,25 +51,39 @@ func checkIfAlpha(s string) bool {
 	}
 	return true
 }
-func setWords(words []string){
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017/lingoDB"))
+func setWords(words []string) {
+	//declare db string
+	const (
+		host     = "localhost"
+		port     = 5432
+		user     = "postgres"
+		password = "admin"
+		dbname   = "lingo_db"
+	)
+	//make connection
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
 
+	// check for err and open connection
+	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	err = client.Connect(ctx)
+	// keep db from closing conn
+	defer db.Close()
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	//prepare stm
 
-	db := client.Database("lingoDB")
-	col := db.Collection("words")
+	stm := "INSERT INTO words (word) VALUES ($1)"
+
+	//for loop to add valid words to db
 	for _, word := range words {
-		var _, _ = col.InsertOne(ctx, bson.D{
-			{"word", word},
-		})
+		_, err := db.Exec(stm, word)
+		if err != nil {
+			log.Fatalf(err.Error())
+		}
 		fmt.Println(word)
 	}
+	db.Close()
 }
